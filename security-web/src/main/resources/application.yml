@@ -1,0 +1,59 @@
+server:
+  port: 80
+  servlet:
+    session:
+      timeout: 30m #Session会话超时时间,默认情况下是30分钟,如配置小于一分钟则会默认设置为一分钟
+      cookie:
+        name: JSESSIONID  #指定浏览器Cookie中关于SessionID保存的名称
+spring:
+  thymeleaf:
+    cache: false  #关闭thymeleaf缓存
+  datasource:
+    username: root
+    password: password
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    type: com.alibaba.druid.pool.DruidDataSource
+    #数据源其他配置，在DruidConfig配置类中手动绑定
+    initialSize: 8
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+  session:
+    store-type: none #session存储方式可配置采用redis
+  redis:
+    host: 111.229.124.80
+    client-name: securitySessionManager
+    password: 112221987
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true #springboot2.2版本后，要手动开启对delete和put方法的处理
+
+mybatis-plus:
+  # 指定实体类所在的包
+  type-aliases-package: com.securitytest.web.entities
+# 日志级别，会打印sql语句
+logging:
+  level:
+    com.securitytest.web.mapper: debug
+
+web:
+  security:
+    authentication:
+      loginPage: /login/page  #响应认证（登录）页面url
+      loginProcessingUrl: /login/form #登录表单提交处理url
+      usernameParameter: name #登录表单用户名的属性名
+      passwordParameter: pwd  #登录表单密码的属性名
+      staticPaths:  # 静态资源 "/dist/**", "/modules/**", "/plugins/**"
+        - /dist/**
+        - /modules/**
+        - /plugins/**
+      loginType: REDIRECT #认证之后响应的类型：JSON/REDIRECT
+      imageCodeUrl: /code/image #获取图形验证码地址
+      mobileCodeUrl: /code/mobile #发送手机验证码
+      mobilePage: /mobile/page  #前往手机登录页面
+      tokenValiditySeconds: 604800  #记住我功能有效时长
+

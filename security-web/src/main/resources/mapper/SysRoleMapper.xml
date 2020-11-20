@@ -1,0 +1,18 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.securitytest.web.mapper.SysRoleMapper">
+
+  <select id="findByUserId" resultType="com.securitytest.web.entities.SysRole">
+		SELECT
+			r.*
+		FROM
+			sys_role AS r
+		JOIN sys_user_role AS ur ON r.id = ur.role_id
+		JOIN sys_user AS u ON ur.user_id = u.id
+		WHERE
+			u.id = #{userId}
+	</select>
+
+</mapper>
